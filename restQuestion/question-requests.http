@@ -1,0 +1,81 @@
+### INFO ON VARIABLES : https://github.com/Huachao/vscode-restclient
+@baseUrl = http://localhost:3000/api
+### Create the user james
+POST {{baseUrl}}/users/
+Content-Type: application/json
+
+{
+    "email":"james@cool.com",
+    "password":"Jj"
+}
+
+### Define & request variable & Log the user james
+# @name login
+POST {{baseUrl}}/users/login
+Content-Type: application/json
+
+{
+    "email":"james@cool.com",
+    "password":"Jj"
+}
+
+### get the token from previous request
+@jamesToken = {{login.response.body.token}}
+
+### View all questions
+GET {{baseUrl}}/questions
+Authorization: {{jamesToken}}
+
+### Add a question
+POST {{baseUrl}}/questions/
+Content-Type: application/json
+Authorization: {{jamesToken}}
+
+{
+    "title":"Quel est la capitale de la Belgique",
+    "categorie": "Geographie",
+    "reponse1": "Bruxelles",
+	"reponse2": "Paris",
+	"reponse3": "Louvain",
+	"reponse4": "Luxembourg",
+    "reponseCorrecte":"Bruxelles"
+}
+
+### Add another question
+POST {{baseUrl}}/questions/
+Content-Type: application/json
+Authorization: {{jamesToken}}
+
+{
+    "title":"Quel est la capitale de la France",
+    "categorie": "Geographie",
+    "reponse1": "Bruxelles",
+	"reponse2": "Paris",
+	"reponse3": "Louvain",
+	"reponse4": "Luxembourg",
+    "reponseCorrecte":"Paris"
+}
+
+### Update question with ID == 2
+
+PUT {{baseUrl}}/questions/2
+Content-Type: application/json
+Authorization: {{jamesToken}}
+
+{
+    "title":"Quel est la capitale de la France",
+    "categorie": "Geographie",
+    "reponse1": "Bruxelles",
+	"reponse2": "Paris",
+	"reponse3": "Louvain",
+	"reponse4": "Suède",
+    "reponseCorrecte":"Paris"
+}
+
+### Delete the question with ID == 2
+DELETE {{baseUrl}}/questions/2
+Authorization: {{jamesToken}}
+
+### Read question with ID == 1
+GET {{baseUrl}}/questions/1
+Authorization: {{jamesToken}}
